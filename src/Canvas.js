@@ -138,7 +138,6 @@ class Canvas extends React.Component{
   	}
   }
 
-
   main(){
     let now = Date.now();
     let delta = now - this.then;
