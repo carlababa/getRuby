@@ -13,7 +13,7 @@ class GameListItem extends React.Component {
   }
 
   gameAlreadyJoined() {
-    return 
+    return
       (this.props.game.playerOne === this.props.currentPlayer ||
       this.props.game.playerTwo === this.props.currentPlayer);
   }
@@ -35,8 +35,8 @@ class GameListItem extends React.Component {
       <li>
         Game by {this.props.game.playerOne}
 
-        { this.gameOpen() && !this.gameAlreadyJoined() &&
-          <button onClick={this.selectGame.bind(this)}>Join Game</button> }
+
+          <button onClick={this.selectGame.bind(this)}>Join Game</button> 
 
         { this.gameOpen() && this.gameAlreadyJoined() &&
           <button onClick={this.selectGame.bind(this)}>Resume Game</button> }
