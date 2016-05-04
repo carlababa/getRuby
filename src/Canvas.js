@@ -74,8 +74,8 @@ class Canvas extends React.Component{
   }
 
   reset(){
-    this.hero.x = 26 + (Math.random() * (this.canvas.width - 64));
-  	this.hero.y = 59 + (Math.random() * (this.canvas.width - 64));
+    this.hero.x = 32 + (Math.random() * (this.canvas.width - 64));
+  	this.hero.y = 32 + (Math.random() * (this.canvas.width - 64));
 
     this.monster.x = 32 + (Math.random() * (this.canvas.width - 64));
     this.monster.y = 32 + (Math.random() * (this.canvas.height - 64));
