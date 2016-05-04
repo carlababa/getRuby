@@ -6,16 +6,14 @@ class GameListItem extends React.Component {
   }
 
   gameOpen() {
-    return !this.gameFinished() &&
-      this.props.game.winner === null &&
+    return
       (this.props.game.playerOne === this.props.currentPlayer ||
       this.props.game.playerTwo === null ||
       this.props.game.playerTwo === this.props.currentPlayer);
   }
 
   gameAlreadyJoined() {
-    return !this.gameFinished() &&
-      this.props.game.winner === null &&
+    return 
       (this.props.game.playerOne === this.props.currentPlayer ||
       this.props.game.playerTwo === this.props.currentPlayer);
   }

@@ -24,8 +24,7 @@ class App extends React.Component {
     this.state = {
       games: [],
       currentGame: null,
-      currentPlayer: playerStorage,
-      playerMove: ""
+      currentPlayer: playerStorage
     };
   }
 
@@ -102,9 +101,11 @@ class App extends React.Component {
             <button onClick={this.clearCurrentGame.bind(this)}>Back</button>
             </div>
           }
-          <div>
+
+          { this.state.currentGame !== null && <div>
             <Canvas />
           </div>
+          }
         </div>
       );
     }
