@@ -17,35 +17,20 @@ const app = feathers()
   // Turn on URL-encoded parser for REST services
   .use(bodyParser.urlencoded({extended: true}));
 
-const mongo_url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/getRubies';
+const mongo_url = process.env.MONGOLAB_URI || 'mongodb://localhost:27017/getrubies';
 
   // Connect to your MongoDB instance(s)
 MongoClient.connect(mongo_url).then(function(db){
   // Connect to the db, create and register a Feathers service.
 
-  app.use('/todos', service({
-    Model: db.collection('todos'),
+  app.use('/games', service({
+    Model: db.collection('games'),
     paginate: {
       default: 100,
       max: 100
     }
   }));
 
-  app.use('/generaljoostjohans', service({
-    Model: db.collection('generaljoostjohans'),
-    paginate: {
-      default: 100,
-      max: 100
-    }
-  }));
-
-  app.use('/iriseriks', service({
-    Model: db.collection('iriseriks'),
-    paginate: {
-      default: 100,
-      max: 100
-    }
-  }));
   // A basic error handler, just like Express
   // app.use(errors.handler());
 
