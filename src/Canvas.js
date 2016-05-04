@@ -9,8 +9,14 @@ class Canvas extends React.Component{
     this.hero = {
     	speed: 325
     };
+
+    this.hero2 = {
+    	speed: 325
+    };
+
     this.monster = {};
     this.monstersCaught = 0;
+    this.monstersCaught2 = 0;
     this.keysDown = {};
     this.then = Date.now();
   }
@@ -38,12 +44,15 @@ class Canvas extends React.Component{
     this.loadBackground();
     this.loadHero();
     this.loadMonster();
+    this.loadHero2();
 
     this.ctx.fillStyle = "rgb(250, 250, 250)";
   	this.ctx.font = "24px Brandon Grotesque";
   	this.ctx.textAlign = "left";
   	this.ctx.textBaseline = "top";
-  	this.ctx.fillText("Rubies found: " + this.monstersCaught, 32, 32);
+  	this.ctx.fillText("Rubies found player 1: " + this.monstersCaught, 32, 32);
+    this.ctx.textBaseline = "bottom";
+    this.ctx.fillText("Rubies found player 2: " + this.monstersCaught2, 32, 32);
   }
 
   loadBackground(){
@@ -64,6 +73,15 @@ class Canvas extends React.Component{
     heroImage.src = require("./images/hero.png");
   }
 
+  loadHero2(){
+    let heroImage = new Image();
+    var self = this;
+    heroImage.onload = function () {
+      self.ctx.drawImage(heroImage, self.hero2.x, self.hero2.y);
+    };
+    heroImage.src = require("./images/hero2.png");
+  }
+
   loadMonster(){
     let monsterImage = new Image();
     var self = this;
@@ -77,9 +95,13 @@ class Canvas extends React.Component{
     this.hero.x = 32 + (Math.random() * (this.canvas.width - 64));
   	this.hero.y = 32 + (Math.random() * (this.canvas.width - 64));
 
+    this.hero2.x = 32 + (Math.random() * (this.canvas.width - 64));
+  	this.hero2.y = 32 + (Math.random() * (this.canvas.width - 64));
+
     this.monster.x = 32 + (Math.random() * (this.canvas.width - 64));
     this.monster.y = 32 + (Math.random() * (this.canvas.height - 64));
   }
+
 
   update(modifier){
     if (38 in this.keysDown) { // Player holding up
@@ -95,7 +117,6 @@ class Canvas extends React.Component{
   		this.hero.x += this.hero.speed * modifier;
   	}
 
-    // Are they touching?
   	if (
   		this.hero.x <= (this.monster.x + 32)
   		&& this.monster.x <= (this.hero.x + 32)
@@ -105,7 +126,18 @@ class Canvas extends React.Component{
   		++this.monstersCaught;
   		this.reset();
   	}
+
+    if (
+  		this.hero2.x <= (this.monster.x + 32)
+  		&& this.monster.x <= (this.hero2.x + 32)
+  		&& this.hero2.y <= (this.monster.y + 32)
+  		&& this.monster.y <= (this.hero2.y + 32)
+  	) {
+  		++this.monstersCaught2;
+  		this.reset();
+  	}
   }
+
 
   main(){
     let now = Date.now();
