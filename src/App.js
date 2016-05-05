@@ -37,6 +37,7 @@ class App extends React.Component {
       let component = this;
       this.games.resources.map(function(game) {
         if (game._id === component.state.currentGame._id) {
+          console.log(game);
           component.setState({
             currentGame: game
           });
@@ -74,8 +75,8 @@ class App extends React.Component {
     }
   }
 
-  onUpdate(move){
-    console.log("Getting moves...")
+  onUpdate(data){
+    this.games.save(this.state.currentGame, data);
   }
 
   clearCurrentGame() {
@@ -120,7 +121,7 @@ class App extends React.Component {
             playerOne={this.state.currentGame.playerOne}
             playerTwo={this.state.currentGame.playerTwo}
             currentGame={this.state.currentGame}
-            onChange={this.state.onUpdate}
+            onChange={this.onUpdate.bind(this)}
             />
           </div>
           }
