@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import keydown, { Keys } from 'react-keydown';
+import GameModel from './models/GameModel';
 
 class Canvas extends React.Component{
   constructor(){
@@ -31,6 +32,7 @@ class Canvas extends React.Component{
 
     this.reset();
     this.main();
+
     var self = this;
     window.addEventListener('keydown', function(e) {
       self.keysDown[e.keyCode] = true;
@@ -93,7 +95,6 @@ class Canvas extends React.Component{
   }
 
   reset(){
-
     this.hero1.x = 32 + (Math.random() * (this.canvas.width - 64));
   	this.hero1.y = 32 + (Math.random() * (this.canvas.width - 64));
 
@@ -106,7 +107,6 @@ class Canvas extends React.Component{
 
 
   update(modifier){
-
     if (38 in this.keysDown) { // Player holding up
   		this.hero.y -= this.hero.speed * modifier;
   	}
@@ -131,7 +131,7 @@ class Canvas extends React.Component{
   		++this.monstersCaught1;
     } else {
       ++this.monstersCaught2;
-    }  
+    }
   		this.reset();
   	}
   }
