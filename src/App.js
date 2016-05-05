@@ -83,11 +83,11 @@ class App extends React.Component {
   render() {
       return (
         <div>
-          <h1>Welcome to Get Rubies!</h1>
+
           { this.state.currentPlayer === null &&
             <NewPlayer onCreate={this.setPlayer.bind(this)}/> }
           { this.state.currentPlayer !== null &&
-            <h1>Hi, {this.state.currentPlayer}</h1> }
+            <h3>Hi, {this.state.currentPlayer}</h3> }
 
           { this.state.currentPlayer && this.state.currentGame === null &&
             <NewGame onCreate={this.createGame.bind(this)}/> }
@@ -96,14 +96,14 @@ class App extends React.Component {
             <GameList games={this.state.games} currentPlayer={this.state.currentPlayer} onSelect={this.joinGame.bind(this)}/> }
 
           { this.state.currentGame !== null && <div>
-            <p>Player one: {this.state.currentGame.playerOne}</p>
-            <p>Player two: {this.state.currentGame.playerTwo}</p>
+            <p>Player one: {this.state.currentGame.playerOne} |
+            Player two: {this.state.currentGame.playerTwo}</p>
             <button onClick={this.clearCurrentGame.bind(this)}>Back</button>
             </div>
           }
 
           { this.state.currentGame !== null && <div>
-            <Canvas />
+            <Canvas isPlayerOne={this.state.currentPlayer == this.state.currentGame.playerOne}/>
           </div>
           }
         </div>

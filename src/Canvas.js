@@ -6,7 +6,7 @@ class Canvas extends React.Component{
   constructor(){
     super();
 
-    this.hero = {
+    this.hero1 = {
     	speed: 325
     };
 
@@ -15,13 +15,17 @@ class Canvas extends React.Component{
     };
 
     this.monster = {};
-    this.monstersCaught = 0;
+    this.monstersCaught1 = 0;
     this.monstersCaught2 = 0;
     this.keysDown = {};
     this.then = Date.now();
   }
 
   componentDidMount() {
+    this.hero = this.props.isPlayerOne ? this.hero1 : this.hero2;
+    this.monstersCaught = this.props.isPlayerOne ? this.monstersCaught1 : this.monstersCaught2;
+
+
     this.canvas = ReactDOM.findDOMNode(this.refs.myCanvas);
     this.ctx = this.canvas.getContext('2d');
     this.ctx.canvas.width = 1024;
@@ -29,7 +33,6 @@ class Canvas extends React.Component{
 
     this.reset();
     this.main();
-
     var self = this;
     window.addEventListener('keydown', function(e) {
       self.keysDown[e.keyCode] = true;
@@ -50,7 +53,7 @@ class Canvas extends React.Component{
   	this.ctx.font = "24px Brandon Grotesque";
   	this.ctx.textAlign = "left";
   	this.ctx.textBaseline = "top";
-  	this.ctx.fillText("Rubies found player 1: " + this.monstersCaught, 32, 32);
+  	this.ctx.fillText("Rubies found player 1: " + this.monstersCaught1, 32, 32);
     this.ctx.textBaseline = "bottom";
     this.ctx.fillText("Rubies found player 2: " + this.monstersCaught2, 32, 32);
   }
@@ -68,7 +71,7 @@ class Canvas extends React.Component{
     let heroImage = new Image();
     var self = this;
     heroImage.onload = function () {
-    	self.ctx.drawImage(heroImage, self.hero.x, self.hero.y);
+    	self.ctx.drawImage(heroImage, self.hero1.x, self.hero1.y);
     };
     heroImage.src = require("./images/hero.png");
   }
@@ -92,8 +95,8 @@ class Canvas extends React.Component{
   }
 
   reset(){
-    this.hero.x = 32 + (Math.random() * (this.canvas.width - 64));
-  	this.hero.y = 32 + (Math.random() * (this.canvas.width - 64));
+    this.hero1.x = 32 + (Math.random() * (this.canvas.width - 64));
+  	this.hero1.y = 32 + (Math.random() * (this.canvas.width - 64));
 
     this.hero2.x = 32 + (Math.random() * (this.canvas.width - 64));
   	this.hero2.y = 32 + (Math.random() * (this.canvas.width - 64));
@@ -123,17 +126,8 @@ class Canvas extends React.Component{
   		&& this.hero.y <= (this.monster.y + 32)
   		&& this.monster.y <= (this.hero.y + 32)
   	) {
-  		++this.monstersCaught;
-  		this.reset();
-  	}
+  		++this.hero.monstersCaught;
 
-    if (
-  		this.hero2.x <= (this.monster.x + 32)
-  		&& this.monster.x <= (this.hero2.x + 32)
-  		&& this.hero2.y <= (this.monster.y + 32)
-  		&& this.monster.y <= (this.hero2.y + 32)
-  	) {
-  		++this.monstersCaught2;
   		this.reset();
   	}
   }
