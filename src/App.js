@@ -74,6 +74,10 @@ class App extends React.Component {
     }
   }
 
+  onUpdate(move){
+    console.log("Getting moves...")
+  }
+
   clearCurrentGame() {
     this.setState({
       currentGame: null
@@ -112,7 +116,12 @@ class App extends React.Component {
           }
 
           { this.state.currentGame !== null && <div>
-            <Canvas isPlayerOne={this.state.currentPlayer == this.state.currentGame.playerOne}/>
+            <Canvas isPlayerOne={this.state.currentPlayer == this.state.currentGame.playerOne}
+            playerOne={this.state.currentGame.playerOne}
+            playerTwo={this.state.currentGame.playerTwo}
+            currentGame={this.state.currentGame}
+            onChange={this.state.onUpdate}
+            />
           </div>
           }
         </div>

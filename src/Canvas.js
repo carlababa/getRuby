@@ -1,20 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import keydown, { Keys } from 'react-keydown';
+import App from './App';
 
 class Canvas extends React.Component{
   constructor(){
     super();
 
     this.hero1 = {
-    	speed: 325
+    	speed: 325,
+      name: this.playerOne,
+      position: {
+        x: 450,
+        y: 450
+      }
     };
 
     this.hero2 = {
-    	speed: 325
+    	speed: 325,
+      name: this.playerTwo,
+      position: {
+        x: 400,
+        y: 400
+      }
     };
 
-    this.monster = {};
+    this.monster = {
+      x: 0,
+      y:0
+    };
     this.monstersCaught1 = 0;
     this.monstersCaught2 = 0;
     this.keysDown = {};
@@ -69,7 +83,7 @@ class Canvas extends React.Component{
     let heroImage = new Image();
     var self = this;
     heroImage.onload = function () {
-    	self.ctx.drawImage(heroImage, self.hero1.x, self.hero1.y);
+    	self.ctx.drawImage(heroImage, self.hero1.position.x, self.hero1.position.y);
     };
     heroImage.src = require("./images/hero.png");
   }
@@ -78,7 +92,7 @@ class Canvas extends React.Component{
     let heroImage = new Image();
     var self = this;
     heroImage.onload = function () {
-      self.ctx.drawImage(heroImage, self.hero2.x, self.hero2.y);
+      self.ctx.drawImage(heroImage, self.hero2.position.x, self.hero2.position.y);
     };
     heroImage.src = require("./images/hero2.png");
   }
@@ -94,11 +108,11 @@ class Canvas extends React.Component{
 
   reset(){
 
-    this.hero1.x = 32 + (Math.random() * (this.canvas.width - 64));
-  	this.hero1.y = 32 + (Math.random() * (this.canvas.width - 64));
-
-    this.hero2.x = 32 + (Math.random() * (this.canvas.width - 64));
-  	this.hero2.y = 32 + (Math.random() * (this.canvas.width - 64));
+    // this.hero1.position.x = 32 + (Math.random() * (this.canvas.width - 64));
+  	// this.hero1.position.y = 32 + (Math.random() * (this.canvas.width - 64));
+    //
+    // this.hero2.position.x = 32 + (Math.random() * (this.canvas.width - 64));
+  	// this.hero2.position.y = 32 + (Math.random() * (this.canvas.width - 64));
 
     this.monster.x = 32 + (Math.random() * (this.canvas.width - 64));
     this.monster.y = 32 + (Math.random() * (this.canvas.height - 64));
@@ -107,31 +121,33 @@ class Canvas extends React.Component{
 
   update(modifier){
 
+    {this.props.onUpdate}
+
     if (38 in this.keysDown) { // Player holding up
-  		this.hero.y -= this.hero.speed * modifier;
+  		this.hero.position.y -= this.hero.speed * modifier;
   	}
   	if (40 in this.keysDown) { // Player holding down
-  		this.hero.y += this.hero.speed * modifier;
+  		this.hero.position.y += this.hero.speed * modifier;
   	}
   	if (37 in this.keysDown) { // Player holding left
-  		this.hero.x -= this.hero.speed * modifier;
+  		this.hero.position.x -= this.hero.speed * modifier;
   	}
   	if (39 in this.keysDown) { // Player holding right
-  		this.hero.x += this.hero.speed * modifier;
+  		this.hero.position.x += this.hero.speed * modifier;
   	}
 
   	if (
-  		this.hero.x <= (this.monster.x + 32)
-  		&& this.monster.x <= (this.hero.x + 32)
-  		&& this.hero.y <= (this.monster.y + 32)
-  		&& this.monster.y <= (this.hero.y + 32)
+  		this.hero.position.x <= (this.monster.x + 32)
+  		&& this.monster.x <= (this.hero.position.x + 32)
+  		&& this.hero.position.y <= (this.monster.y + 32)
+  		&& this.monster.y <= (this.hero.position.y + 32)
   	) {
 
     if(this.hero == this.hero1){
   		++this.monstersCaught1;
     } else {
       ++this.monstersCaught2;
-    }  
+    }
   		this.reset();
   	}
   }
