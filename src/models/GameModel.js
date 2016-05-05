@@ -19,7 +19,12 @@ class GameModel extends BaseModel {
           y: 400
         }
       },
-      monster: {x: null, y: null}
+      monster:{
+        x: 0,
+        y: 0
+      },
+      monstersCaught1: 0,
+      monstersCaught2: 0      
     };
   }
 
