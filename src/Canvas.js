@@ -7,16 +7,16 @@ class Canvas extends React.Component{
   constructor(props){
     super(props);
 
+    this.newGameData = {};
+
     this.hero1 = this.props.currentGame.hero1;
 
     this.hero2 = this.props.currentGame.hero2;
 
-    this.monster = {
-      x: 0,
-      y:0
-    };
-    this.monstersCaught1 = 0;
-    this.monstersCaught2 = 0;
+    this.monster = this.props.currentGame.monster;
+
+    this.monstersCaught1 = this.props.currentGame.monstersCaught1;
+    this.monstersCaught2 = this.props.currentGame.monstersCaught2;
     this.keysDown = {};
     this.then = Date.now();
   }
@@ -95,11 +95,11 @@ class Canvas extends React.Component{
   reset(){
     this.monster.x = 32 + (Math.random() * (this.canvas.width - 64));
     this.monster.y = 32 + (Math.random() * (this.canvas.height - 64));
+    this.newGameData.monster = this.monster;
   }
 
 
   update(modifier){
-    let newGameData = {};
     let changed = false;
 
     if (38 in this.keysDown) { // Player holding up
@@ -120,9 +120,9 @@ class Canvas extends React.Component{
   	}
 
     if (this.hero == this.hero1) {
-      newGameData.hero1 = this.hero;
+      this.newGameData.hero1 = this.hero;
     } else {
-      newGameData.hero2 = this.hero;
+      this.newGameData.hero2 = this.hero;
     }
 
   	if (
@@ -134,17 +134,17 @@ class Canvas extends React.Component{
 
       if(this.hero == this.hero1){
     		++this.monstersCaught1;
-        newGameData.monstersCaught1 = this.monstersCaught1;
+        this.newGameData.monstersCaught1 = this.monstersCaught1;
       } else {
         ++this.monstersCaught2;
-        newGameData.monstersCaught2 = this.monstersCaught2;
+        this.newGameData.monstersCaught2 = this.monstersCaught2;
       }
 
   		this.reset();
   	}
 
     if (changed) {
-      this.props.onChange(newGameData);
+      this.props.onChange(this.newGameData);
     }
   }
 
@@ -168,6 +168,9 @@ class Canvas extends React.Component{
     this.hero1 = this.props.currentGame.hero1;
     this.hero2 = this.props.currentGame.hero2;
     this.hero = this.props.isPlayerOne ? this.hero1 : this.hero2;
+    this.monstersCaught1 = this.props.currentGame.monstersCaught1;
+    this.monstersCaught2 = this.props.currentGame.monstersCaught2;
+    this.monster = this.props.currentGame.monster;
 
       return (
         <div>
