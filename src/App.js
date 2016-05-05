@@ -80,6 +80,12 @@ class App extends React.Component {
     });
   }
 
+  logoutCurrentPlayer() {
+    this.setState({
+      currentPlayer: null
+    });
+  }
+
   render() {
       return (
         <div>
@@ -88,6 +94,9 @@ class App extends React.Component {
             <NewPlayer onCreate={this.setPlayer.bind(this)}/> }
           { this.state.currentPlayer !== null &&
             <h3>Hi, {this.state.currentPlayer}</h3> }
+          { this.state.currentPlayer !== null &&
+            <div><button onClick={this.logoutCurrentPlayer.bind(this)}>Logout</button></div>
+          }
 
           { this.state.currentPlayer && this.state.currentGame === null &&
             <NewGame onCreate={this.createGame.bind(this)}/> }
