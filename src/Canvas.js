@@ -23,8 +23,6 @@ class Canvas extends React.Component{
 
   componentDidMount() {
     this.hero = this.props.isPlayerOne ? this.hero1 : this.hero2;
-    this.monstersCaught = this.props.isPlayerOne ? this.monstersCaught1 : this.monstersCaught2;
-
 
     this.canvas = ReactDOM.findDOMNode(this.refs.myCanvas);
     this.ctx = this.canvas.getContext('2d');
@@ -95,6 +93,7 @@ class Canvas extends React.Component{
   }
 
   reset(){
+
     this.hero1.x = 32 + (Math.random() * (this.canvas.width - 64));
   	this.hero1.y = 32 + (Math.random() * (this.canvas.width - 64));
 
@@ -107,6 +106,7 @@ class Canvas extends React.Component{
 
 
   update(modifier){
+
     if (38 in this.keysDown) { // Player holding up
   		this.hero.y -= this.hero.speed * modifier;
   	}
@@ -126,8 +126,12 @@ class Canvas extends React.Component{
   		&& this.hero.y <= (this.monster.y + 32)
   		&& this.monster.y <= (this.hero.y + 32)
   	) {
-  		++this.hero.monstersCaught;
 
+    if(this.hero == this.hero1){
+  		++this.monstersCaught1;
+    } else {
+      ++this.monstersCaught2;
+    }  
   		this.reset();
   	}
   }
