@@ -1,4 +1,9 @@
 import React from 'react';
+import FlatButton from 'material-ui/FlatButton';
+import {List, ListItem} from 'material-ui/List';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class GameListItem extends React.Component {
   selectGame() {
@@ -29,19 +34,27 @@ class GameListItem extends React.Component {
     return player;
   }
 
+  buttonColorStyle(){
+    return{
+      color: "#A31414"
+    };
+  }
 
   render() {
     return (
-      <li>
-        Game by {this.props.game.playerOne}
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <List>
+          <Card>
+            <CardTitle>
+              Game by {this.props.game.playerOne}
+              <FlatButton style={this.buttonColorStyle()} onClick={this.selectGame.bind(this)} primary={true}>JOIN</FlatButton>
 
-
-          <button onClick={this.selectGame.bind(this)}>Join Game</button> 
-
-        { this.gameOpen() && this.gameAlreadyJoined() &&
-          <button onClick={this.selectGame.bind(this)}>Resume Game</button> }
-
-      </li>
+              { this.gameOpen() && this.gameAlreadyJoined() &&
+                <FlatButton style={this.buttonColorStyle()} onClick={this.selectGame.bind(this)} primary={true}>Resume Game</FlatButton> }
+            </CardTitle>
+          </Card>
+        </List>
+      </MuiThemeProvider>
     );
   }
 }

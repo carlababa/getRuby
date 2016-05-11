@@ -26,8 +26,8 @@ class Canvas extends React.Component{
 
     this.canvas = ReactDOM.findDOMNode(this.refs.myCanvas);
     this.ctx = this.canvas.getContext('2d');
-    this.ctx.canvas.width = 1024;
-    this.ctx.canvas.height = 960;
+    this.ctx.canvas.width = 960;
+    this.ctx.canvas.height = 900;
 
     this.reset();
     this.main();
