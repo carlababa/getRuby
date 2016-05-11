@@ -1,4 +1,7 @@
 import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class NewGame extends React.Component {
   createGame(event) {
@@ -7,15 +10,23 @@ class NewGame extends React.Component {
     this.props.onCreate();
   }
 
+  buttonStyle(){
+    return{
+      margin: 12
+    };
+  }
+
   render() {
     return(
-      <div>
-        <form onSubmit={this.createGame.bind(this)}>
-          <div>
-            <button type="submit">Create New Game</button>
-          </div>
-        </form>
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <div>
+          <form onSubmit={this.createGame.bind(this)}>
+            <div>
+              <RaisedButton style={this.buttonStyle()} type="submit">Create New Game</RaisedButton>
+            </div>
+          </form>
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

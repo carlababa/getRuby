@@ -6,6 +6,12 @@ import NewPlayer from './NewPlayer';
 import NewGame from './NewGame';
 import GameList from './GameList';
 import GameListItem from './GameListItem';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import RaisedButton from 'material-ui/RaisedButton';
+import AppBar from 'material-ui/AppBar';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 class App extends React.Component {
 
@@ -91,41 +97,63 @@ class App extends React.Component {
     });
   }
 
+  buttonStyle(){
+    return{
+      margin: 12
+    };
+  }
+
+  backgroundStyle(){
+    return{
+      backgroundColor: "#A31414"
+    };
+  }
+
+  container(){
+    return{
+      margin: "auto",
+      width: "60%"
+    };
+  }
+
   render() {
       return (
-        <div>
+        <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <div>
+            <AppBar style={this.backgroundStyle()} title="GetRubies" />
+            <div  style={this.container()}>
+              { this.state.currentPlayer === null &&
+                <NewPlayer onCreate={this.setPlayer.bind(this)}/> }
+              { this.state.currentPlayer !== null &&
+                <div><strong>Hi, {this.state.currentPlayer}</strong>
+                <RaisedButton style={this.buttonStyle()} onClick={this.logoutCurrentPlayer.bind(this)}>Logout</RaisedButton></div>
+              }
 
-          { this.state.currentPlayer === null &&
-            <NewPlayer onCreate={this.setPlayer.bind(this)}/> }
-          { this.state.currentPlayer !== null &&
-            <h3>Hi, {this.state.currentPlayer}</h3> }
-          { this.state.currentPlayer !== null &&
-            <div><button onClick={this.logoutCurrentPlayer.bind(this)}>Logout</button></div>
-          }
+              { this.state.currentPlayer && this.state.currentGame === null &&
+                <NewGame onCreate={this.createGame.bind(this)}/> }
 
-          { this.state.currentPlayer && this.state.currentGame === null &&
-            <NewGame onCreate={this.createGame.bind(this)}/> }
+              { this.state.currentGame === null &&
+                <GameList games={this.state.games} currentPlayer={this.state.currentPlayer} onSelect={this.joinGame.bind(this)}/> }
 
-          { this.state.currentGame === null &&
-            <GameList games={this.state.games} currentPlayer={this.state.currentPlayer} onSelect={this.joinGame.bind(this)}/> }
+              { this.state.currentGame !== null && <div>
+                <p>Player one: {this.state.currentGame.playerOne} |
+                Player two: {this.state.currentGame.playerTwo}</p>
+                <RaisedButton onClick={this.clearCurrentGame.bind(this)}>Back</RaisedButton>
+                </div>
+              }
 
-          { this.state.currentGame !== null && <div>
-            <p>Player one: {this.state.currentGame.playerOne} |
-            Player two: {this.state.currentGame.playerTwo}</p>
-            <button onClick={this.clearCurrentGame.bind(this)}>Back</button>
+              { this.state.currentGame !== null && <div>
+                <Canvas isPlayerOne={this.state.currentPlayer == this.state.currentGame.playerOne}
+                playerOne={this.state.currentGame.playerOne}
+                playerTwo={this.state.currentGame.playerTwo}
+                currentGame={this.state.currentGame}
+                onChange={this.onUpdate.bind(this)}
+                />
+              </div>
+              }
             </div>
-          }
-
-          { this.state.currentGame !== null && <div>
-            <Canvas isPlayerOne={this.state.currentPlayer == this.state.currentGame.playerOne}
-            playerOne={this.state.currentGame.playerOne}
-            playerTwo={this.state.currentGame.playerTwo}
-            currentGame={this.state.currentGame}
-            onChange={this.onUpdate.bind(this)}
-            />
           </div>
-          }
-        </div>
+        </MuiThemeProvider>
       );
     }
 }
