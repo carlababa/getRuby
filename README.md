@@ -12,7 +12,7 @@ npm install
 npm start
 ```
 
-/api-host:
+/api_host:
 ```bash
 npm install
 npm start
