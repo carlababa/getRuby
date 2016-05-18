@@ -6,14 +6,13 @@ A multi-player game with the objective to collect the largest possible amount of
 
 You will need two servers running.
 
-Root folder:
-
+Root:
 ```bash
 npm install
 npm start
 ```
-Api-host folder:
 
+/api-host:
 ```bash
 npm install
 npm start
